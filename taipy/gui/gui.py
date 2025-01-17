@@ -730,6 +730,8 @@ class Gui:
                         self.__handle_ws_app_id(message)
                     elif msg_type == _WsType.GET_ROUTES.value:
                         self.__handle_ws_get_routes()
+                    elif msg_type == _WsType.LOCAL_STORAGE.value:
+                        self.__handle_ws_local_storage(message)
                     else:
                         self._manage_external_message(msg_type, message)
                 self.__send_ack(message.get("ack_id"))
@@ -1367,6 +1369,31 @@ class Gui:
             },
             send_back_only=True,
         )
+
+    def __handle_ws_local_storage(self, message: t.Any):
+        if not isinstance(message, dict):
+            return
+        payload = message.get("payload", None)
+        scope_meta_ls = self._get_data_scope_metadata()[_DataScopes._META_LOCAL_STORAGE]
+        if payload is None:
+            return
+        for key, value in payload.items():
+            if value is not None and scope_meta_ls.get(key) != value:
+                scope_meta_ls[key] = value
+
+    def _query_local_storage(self, *keys: str) -> t.Optional[t.Union[str, t.Dict[str, str]]]:
+        if not keys:
+            return None
+        if len(keys) == 1:
+            if keys[0] in self._get_data_scope_metadata()[_DataScopes._META_LOCAL_STORAGE]:
+                return self._get_data_scope_metadata()[_DataScopes._META_LOCAL_STORAGE][keys[0]]
+            return None
+        # case of multiple keys
+        ls_items = {}
+        for key in keys:
+            if key in self._get_data_scope_metadata()[_DataScopes._META_LOCAL_STORAGE]:
+                ls_items[key] = self._get_data_scope_metadata()[_DataScopes._META_LOCAL_STORAGE][key]
+        return ls_items
 
     def __send_ws(self, payload: dict, allow_grouping=True, send_back_only=False) -> None:
         grouping_message = self.__get_message_grouping() if allow_grouping else None

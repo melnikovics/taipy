@@ -77,6 +77,7 @@ from ._renderers import Html, Markdown
 from ._renderers.json import JsonAdapter
 from .gui_actions import (
     broadcast_callback,
+    close_notification,
     download,
     get_module_context,
     get_module_name_from_state,
@@ -87,6 +88,7 @@ from .gui_actions import (
     invoke_long_callback,
     navigate,
     notify,
+    query_local_storage,
     resume_control,
 )
 from .icon import Icon
