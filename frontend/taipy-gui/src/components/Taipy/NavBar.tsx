@@ -66,9 +66,7 @@ const NavBar = (props: LovProps) => {
         [state.locations, navigate]
     );
 
-    const selectedVal =
-        lov.find((it) => getBaseURL() + it.id.substring(1) === location.pathname)?.id ||
-        (lov.length ? lov[0].id : false);
+    const selectedVal = lov.find((it) => getBaseURL() + it.id.substring(1) === location.pathname)?.id || "";
 
     return isMobile ? (
         <Tooltip title={hover || ""}>

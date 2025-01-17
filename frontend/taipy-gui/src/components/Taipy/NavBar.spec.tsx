@@ -53,18 +53,18 @@ describe("NavBar Component", () => {
     });
     it("is disabled", async () => {
         const { getAllByRole } = render(<BrowserRouter><NavBar lov={lov} active={false} /></BrowserRouter>);
-        const elts = getAllByRole("tab");
-        elts.forEach(elt => expect(elt).toBeDisabled());
+        const tabElements = getAllByRole("tab");
+        tabElements.forEach(elt => expect(elt).toBeDisabled());
     });
     it("is enabled by default", async () => {
         const { getAllByRole } = render(<BrowserRouter><NavBar lov={lov} /></BrowserRouter>);
-        const elts = getAllByRole("tab");
-        elts.forEach(elt => expect(elt).not.toBeDisabled());
+        const tabElements = getAllByRole("tab");
+        tabElements.forEach(elt => expect(elt).not.toBeDisabled());
     });
     it("is enabled by active", async () => {
         const { getAllByRole } = render(<BrowserRouter><NavBar lov={lov} active={true} /></BrowserRouter>);
-        const elts = getAllByRole("tab");
-        elts.forEach(elt => expect(elt).not.toBeDisabled());
+        const tabElements = getAllByRole("tab");
+        tabElements.forEach(elt => expect(elt).not.toBeDisabled());
     });
     it("dispatch a well formed message", async () => {
         const focusSpy = jest.fn()
