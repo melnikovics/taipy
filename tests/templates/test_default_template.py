@@ -51,7 +51,7 @@ def test_main_file_with_and_without_extension(tmpdir):
         output_dir=str(tmpdir),
         no_input=True,
         extra_context={
-            "Application root folder name": "foo_app",
+            "Application root folder": "foo_app",
             "Application main Python file": "app",
         },
     )
@@ -64,8 +64,8 @@ def test_with_orchestrator_service(tmpdir):
         output_dir=str(tmpdir),
         no_input=True,
         extra_context={
-            "Does the application use scenario management or version management?": "y",
-            "Does the application use Rest API?": "no",
+            "With scenario management?": "y",
+            "With a Rest API?": "no",
         },
     )
 
@@ -89,8 +89,8 @@ def test_with_rest_service(tmpdir):
         output_dir=str(tmpdir),
         no_input=True,
         extra_context={
-            "Does the application use scenario management or version management?": "n",
-            "Does the application use Rest API?": "yes",
+            "With scenario management?": "n",
+            "With a Rest API?": "yes",
         },
     )
 
@@ -112,8 +112,8 @@ def test_with_both_orchestrator_rest_services(tmpdir):
         output_dir=str(tmpdir),
         no_input=True,
         extra_context={
-            "Does the application use scenario management or version management?": "y",
-            "Does the application use Rest API?": "yes",
+            "With scenario management?": "y",
+            "With a Rest API?": "yes",
         },
     )
 
@@ -138,8 +138,8 @@ def test_multipage_gui_template(tmpdir):
         output_dir=str(tmpdir),
         no_input=True,
         extra_context={
-            "Application root folder name": "foo_app",
-            "Page names in multi-page application?": "name_1 name_2 name_3",
+            "Application root folder": "foo_app",
+            "With multi-pages?\n\tEnter the page names separated by a space": "name_1 name_2 name_3",
         },
     )
 
@@ -160,8 +160,8 @@ def test_multipage_gui_template_with_invalid_page_name(tmpdir, capfd):
             output_dir=str(tmpdir),
             no_input=True,
             extra_context={
-                "Application root folder name": "foo_app",
-                "Page names in multi-page application?": "valid_var_name 1_invalid_var_name",
+                "Application root folder": "foo_app",
+                "With multi-pages?\n\tEnter the page names separated by a space": "valid_var_name 1_invalid_var_name",
             },
         )
 
@@ -177,8 +177,8 @@ def test_with_git(tmpdir):
         output_dir=str(tmpdir),
         no_input=True,
         extra_context={
-            "Application root folder name": "foo_app",
-            "Do you want to initialize a new Git repository?": "y",
+            "Application root folder": "foo_app",
+            "With a new Git repository?": "y",
         },
     )
 
