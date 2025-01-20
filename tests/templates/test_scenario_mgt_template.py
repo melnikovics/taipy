@@ -22,10 +22,10 @@ def test_scenario_management_with_toml_config(tmpdir):
         output_dir=tmpdir,
         no_input=True,
         extra_context={
-            "Application root folder name": "foo_app",
+            "Application root folder": "foo_app",
             "Application main Python file": "main.py",
             "Application title": "bar",
-            "Does the application use TOML Config?": "yes",
+            "With TOML Config?": "yes",
         },
     )
 
@@ -54,10 +54,10 @@ def test_scenario_management_without_toml_config(tmpdir):
         output_dir=tmpdir,
         no_input=True,
         extra_context={
-            "Application root folder name": "foo_app",
+            "Application root folder": "foo_app",
             "Application main Python file": "main.py",
             "Application title": "bar",
-            "Does the application use TOML Config?": "no",
+            "With TOML Config?": "no",
         },
     )
 
@@ -85,8 +85,8 @@ def test_with_git(tmpdir):
         output_dir=str(tmpdir),
         no_input=True,
         extra_context={
-            "Application root folder name": "foo_app",
-            "Do you want to initialize a new Git repository?": "y",
+            "Application root folder": "foo_app",
+            "With a new Git repository?": "y",
         },
     )
 
