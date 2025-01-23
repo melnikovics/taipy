@@ -1538,3 +1538,25 @@ def test_check_consistency():
     task_5 = Task("bob", {}, print, [data_node_5], [data_node_3], TaskId("t5"))
     scenario_9 = Scenario("scenario_9", [task_1, task_2, task_3, task_4, task_5], {}, [], scenario_id=ScenarioId("s8"))
     assert scenario_9._is_consistent()
+
+
+def test_check_inconsistency(caplog):
+    class FakeDataNode:
+        config_id = "config_id_of_a_fake_dn"
+
+    data_node_1 = InMemoryDataNode("foo", Scope.SCENARIO, "s1")
+    data_node_2 = InMemoryDataNode("bar", Scope.SCENARIO, "s2")
+
+    task_1 = Task("grault", {}, print, [data_node_1, data_node_2], [FakeDataNode()], TaskId("t1"))
+    task_2 = Task("garply", {}, print, [data_node_1], [data_node_2], id=TaskId("t2"))
+    scenario_1 = Scenario("scenario_1", [task_1, task_2], {}, [], scenario_id=ScenarioId("s1"))
+    assert not scenario_1._is_consistent()
+    assert (
+        'Invalid edge detected in scenario "s1": left node Task "grault" and right node FakeDataNode'
+        " must connect a Task and a DataNode" in caplog.text
+    )
+
+    task_3 = Task("waldo", {}, print, [data_node_2], [data_node_1], id=TaskId("t3"))
+    scenario_2 = Scenario("scenario_2", [task_2, task_3], {}, [], scenario_id=ScenarioId("s2"))
+    assert not scenario_2._is_consistent()
+    assert 'The DAG of scenario "s2" is not a directed acyclic graph' in caplog.text
